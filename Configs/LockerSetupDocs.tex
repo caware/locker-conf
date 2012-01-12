@@ -8,15 +8,15 @@
 
 \lstset{basicstyle=\footnotesize\ttfamily,}
 
-\title{Locker Setup Documentation V1.0}
+\title{Locker Setup Documentation V2.0}
 \author{Chris Elsmore}
-\date{October 2011}
+\date{January 2012}
 \setlength{\parindent}{0pt}
 
 \begin{document}
 \maketitle
 
-This document explains the steps to install and configure Locker and its dependencies, and to create a secure web proxy front end using Nginx, on Ubuntu Linux circa 2011 (tested on 11.04 Natty Narwhal).
+This document explains the steps to install and configure Locker and its dependencies, and to create a secure web proxy front end using Nginx, on Ubuntu Linux circa 2011 (tested on 11.04 Natty Narwhal) and/or Debian 6 "Squeeze".
 
 \section{Locker Configuration}
 \label{sec:LockerConfiguration}
@@ -32,10 +32,18 @@ Locker uses a number of technologies, all of which need to be installed and conf
 
 Installing Mongo DB involves adding the Mongo Repositories, and then installing with apt-get.
 
+Installing on Debian:
+\begin{lstlisting}
+sudo apt-get install mongodb
+\end{lstlisting}
+
+
+
+Installing on Ubuntu involves:
 \begin{lstlisting}
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
 
-sudo gedit /etc/apt/sources.list
+sudo nano /etc/apt/sources.list
     deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen
 
 sudo apt-get update
@@ -51,6 +59,22 @@ sudo apt-get install mongodb-10gen
 
 Installing Node.js involves first downloading and building the source. The latest Node.js that Locker currently supports is V0.4.9, and a few packages are needed before building can complete.
 
+Installing on Debian:
+\begin{lstlisting}
+sudo apt-get install g++ curl libssl-dev apache2-utils git-core cmake
+
+mkdir ~/Downloads && cd Downloads
+mkdir nodejs && cd nodejs
+
+wget http://nodejs.org/dist/node-v0.4.9.tar.gz
+tar -xvf node-v0.4.9.tar.gz 
+
+./configure
+make -j2
+sudo make install
+\end{lstlisting}
+
+Installing on Ubuntu:
 \begin{lstlisting}
 sudo apt-get install g++ curl libssl-dev apache2-utils git-core cmake
 
