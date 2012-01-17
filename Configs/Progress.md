@@ -28,6 +28,55 @@ Installed sudo so lockeruser can sudo anything, using the root password:
     
     MYADMINS ALL = ALL
 
+Installed DenyHosts
+-------------------
+
+Installed DenyHosts to prevent sshd attacks.
+
+`sudo apt-get install denyhosts`
+`sudo nano /etc/denyhosts.conf`
+
+    ADMIN_EMAIL = cce25@cam.ac.uk
+    
+    SMTP_SUBJECT = DB1.locker DenyHosts Report
+    
+`sudo /etc/init.d/denyhosts restart`
+
+Installed UFW
+-------------
+
+`sudo apt-get install ufw`
+`nano firewall.sh`
+
+    #!/bin/bash
+    
+    if [[ $EUID -ne 0 ]]; then
+        echo "You must be root or sudo!"
+        exit 1
+    fi
+    
+    #Disable firewall
+    ufw disable
+    
+    #Reset all firewall rules
+    #ufw reset
+    
+    
+    #set default deny all incoming
+    ufw default deny incoming
+    
+    #set allow rules
+    ufw allow 22/tcp    #Allow access to sshd
+    
+    
+    #Enable firewall
+    ufw enable
+    
+    #Enable logging
+    ufw logging on
+    
+    #Print status
+    ufw status verbose
 
 Installed Mongo
 ---------------
